@@ -28,10 +28,10 @@
 	<table class="table table-bordered table-responsive">
 			<thead>
 				<tr>
-					<td>Nom</td>
-					<td>Description</td>
-					<td>Prix</td>
-					<td>Poids</td>
+					<td>Nom produit</td>
+					<td>Description du produit</td>
+					<td>Prix du produit</td>
+					<td>Poids du produit</td>
 					<td>Stock</td>
 					<td>Categorie</td>
 					<th>Action</th>
@@ -58,6 +58,14 @@
 				</tr>
 			<?php
 			}
+			}else{
+				?>
+				<div class="col-sm-16">
+				<div class="alert alert-danger">
+				  Y a pas de produit disponible pour le moment!! Cliquez <a href="<?= base_url('admin/ajouterProduit'); ?>">ici</a> pour ajouter
+			  </div>
+				</div>
+				<?php
 			}
 			?>
 			</tbody>
