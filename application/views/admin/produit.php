@@ -23,7 +23,7 @@
 ?>
 
 
-	<a href="<?= base_url('admin/ajouterProduit'); ?>" class="btn btn-primary">Ajouter</a>
+	<a href="<?= base_url('admin/submit'); ?>" class="btn btn-primary">Ajouter</a>
 	<a href="<?php echo base_url('admin/home'); ?>" class="btn btn-default">Retour</a>
 	<table class="table table-bordered table-responsive">
 			<thead>

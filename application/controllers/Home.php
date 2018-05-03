@@ -12,14 +12,6 @@ class Home extends CI_Controller{
         $this->load->view('front/index');
         $this->load->view('layout/footerFront');
     }
-    public function panier(){
-        $this->load->model('admin_m');
-        $produit['listProduit'] = $this->admin_m->getProduit();
-        $data['title']     = "Votre panier";
-        $this->load->view('layout/headerFront',$data);
-        $this->load->view('front/panier',$produit);
-        $this->load->view('layout/footerFront');
-    }
 
     public function boutique(){
         $data['title']="E-shop-Boutique";

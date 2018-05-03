@@ -1,8 +1,10 @@
 <h3>Ajouter des produits</h3>
 <a href="<?php echo base_url('admin/produit'); ?>" onClick="return confirm('voulez-vous vraiment quitter ??');" class="btn btn-default">Retour</a>
 
- 
-<form action="<?php echo base_url('/admin/submit') ;?>" method="POST" class="form-horizontal" enctype="multipart/form-data">
+<?php echo $this->session->flashdata('success_msg'); ?>
+<?php echo $this->session->flashdata('error_msg'); ?>
+
+<form role="form" method="POST" class="form-horizontal" enctype="multipart/form-data">
 
 	<div class="form-group">
 		<label for="titre" class="col-md-2 text-right">Nom du produit</label>

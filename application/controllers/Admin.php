@@ -96,20 +96,58 @@ class Admin extends CI_Controller{
         }
     }
   public function submit(){
-        $result = $this->admin_m->submit();
-		if($result){
-	$this->session->set_flashdata('success_msg','Produit ajouter avec succès!!');
-					}else{
+      if ($this->session->userdata('username') != '') {
 
-	$this->session->set_flashdata('error_msg','Produit Non ajouté!!');				
-					}
+          $data['title']       ="Ajouter produit";
+          $donne['categorie']  = $this->admin_m->getCategorie();
+          $this->load->model('product');
 
-	redirect(base_url('admin/produit'));
+          if ($this->input->post('submit')) {
 
+              if (!empty($_FILES['imagePro']['nom'])) {
+                  $config['upload_path']   = './uploads/';
+                  $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                  $config['max_size']      = 1000;
+                  $config['max_width']     = 1024;
+                  $config['max_height']    = 768;
+                  $config['file_name']     = $_FILES['imagePro']['nom'];
 
+                  $this->load->library('upload', $config);
+
+                  if (!$this->upload->do_upload('imagePro')) {
+                      $picture=" ";
+                  } else {
+                      $uploadData = $this->upload->data();
+                      $picture    = $uploadData['file_name'];
+                  }
+              }
+              $proData = array(
+                  'titre' => $this->input->post('nom'),
+                  'description' => $this->input->post('descri'),
+                  'prix' => $this->input->post('prix'),
+                  'stock' => $this->input->post('stock'),
+                  'categorie' => $this->input->post('categorie'),
+                  'imageProduit' => $picture
+              );
+              $insertProData = $this->product->insert($proData);
+              var_dump($picture);
+
+              if ($insertProData) {
+                  $this->session->set_flashdata('success_msg', 'User data have been added successfully.');
+              } else {
+                  $this->session->set_flashdata('error_msg', 'Some problems occured, please try again.');
+              }
+          }
+          $this->load->view('layout/header',$data);
+          $this->load->view('admin/ajoutProduit',$donne);
+          $this->load->view('layout/footer');
+
+      }else{
+          redirect(base_url() . 'admin/index');
+      }
     }
 
-    public function ajouterProduit(){
+   /* public function ajouterProduit(){
 
      if($this->session->userdata('username')!=''){
         $data['title']       ="Ajouter produit";
@@ -136,7 +174,7 @@ class Admin extends CI_Controller{
             redirect(base_url().'admin/index');
         }
      }
-
+*/
     public function modifierProduit($id){
         if($this->session->userdata('username')!=''){
             $donne['title']        ="Modifier produit";
