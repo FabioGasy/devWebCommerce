@@ -102,6 +102,10 @@ class Admin extends CI_Controller{
           $donne['categorie']  = $this->admin_m->getCategorie();
           $this->load->model('product');
 
+          $this->load->view('layout/header',$data);
+          $this->load->view('admin/ajoutProduit',$donne);
+          $this->load->view('layout/footer');
+
           if ($this->input->post('submit')) {
 
               if (!empty($_FILES['imagePro']['nom'])) {
@@ -113,13 +117,16 @@ class Admin extends CI_Controller{
                   $config['file_name']     = $_FILES['imagePro']['nom'];
 
                   $this->load->library('upload', $config);
+                  $this->upload->initialize($config);
 
-                  if (!$this->upload->do_upload('imagePro')) {
-                      $picture=" ";
-                  } else {
+                  if ($this->upload->do_upload('imagePro')) {
                       $uploadData = $this->upload->data();
                       $picture    = $uploadData['file_name'];
+                  } else {
+                      $picture = '';
                   }
+              }else{
+                  $picture = '';
               }
               $proData = array(
                   'titre' => $this->input->post('nom'),
@@ -133,14 +140,14 @@ class Admin extends CI_Controller{
               var_dump($picture);
 
               if ($insertProData) {
-                  $this->session->set_flashdata('success_msg', 'User data have been added successfully.');
+                  $this->session->set_flashdata('success_msg', 'Produit ajouter avec succès.');
+                  redirect(base_url().'admin/produit');
               } else {
                   $this->session->set_flashdata('error_msg', 'Some problems occured, please try again.');
+                  redirect(base_url().'admin/produit');
               }
           }
-          $this->load->view('layout/header',$data);
-          $this->load->view('admin/ajoutProduit',$donne);
-          $this->load->view('layout/footer');
+
 
       }else{
           redirect(base_url() . 'admin/index');

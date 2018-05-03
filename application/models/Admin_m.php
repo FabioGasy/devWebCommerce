@@ -44,33 +44,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     }
 
-    public function submit(){
-      //  $this->db->insert('produit',$produit);
- 
-     $titre    = $this ->input->post('nom');
-     $descri   = $this->input->post('descri');
-     $prix     = $this->input->post('prix');
-     $stock    = $this->input->post('stock');
-     $categorie= $this ->input->post('categorie'); 
-     
-    
-      $field = array(
-          'titre'        => $titre,
-          'description'  => $descri,
-          'prix'         => $prix,
-          'stock'        => $stock,
-          'categorie'    => $categorie,
-         'imageProduit'  => $titre
-      );
-       $this->db->insert('produit',$field);
-      if($this->db->affected_rows()>0){ 
-        return true;
-      }else{
-          return false;
-      }
-        }
-
-
     public function getProById($id){
 		$this->db->where('id',$id);
 		$query=$this->db->get('produit');
